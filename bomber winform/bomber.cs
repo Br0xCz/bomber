@@ -17,7 +17,7 @@ namespace bomber_winform
         public int id;
         public bool dead = false;
         public Vector2i positon;
-        private Texture playerTexture = new Texture("resources/player.png");
+        private Texture playerTexture;
         public Sprite player;
 
         private bool[] collision = { true, true, false, true, true };
@@ -34,6 +34,7 @@ namespace bomber_winform
         private int[,] gameState;
         public Player(int posX, int posY, int[,] map, Keyboard.Key[] controls, int id)
         {
+            this.playerTexture = new Texture("resources/tileset.png",new IntRect(new Vector2i(this.tileSize * id, this.tileSize*2), new Vector2i(this.tileSize,this.tileSize)));
             this.player = new Sprite(this.playerTexture);
             this.player.Scale = new Vector2f(2.0f, 2.0f);
             this.player.Position = new Vector2f(posX * this.tileSize * this.scale, posY * this.tileSize * this.scale);
@@ -42,6 +43,7 @@ namespace bomber_winform
             this.id = id;
             this.controls = controls;
 
+            
         }
         private bool checkCollision(int translateX, int translateY)
         {
