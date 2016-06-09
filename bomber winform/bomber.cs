@@ -178,6 +178,7 @@ namespace bomber_winform
                     {
                         map[posX, posY] = 2;
                     }
+                    if(map[posX,posY] != 1)
                     gameState[posX, posY] = 2;
 
                 }

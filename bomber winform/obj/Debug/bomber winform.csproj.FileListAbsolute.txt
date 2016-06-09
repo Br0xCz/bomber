@@ -20,3 +20,25 @@ E:\tvorba\programovani\C#\bomber winform\bomber winform\bin\Debug\sfmlnet-system
 E:\tvorba\programovani\C#\bomber winform\bomber winform\bin\Debug\sfmlnet-window-2.dll
 E:\tvorba\programovani\C#\bomber winform\bomber winform\obj\Debug\bomber winform.exe
 E:\tvorba\programovani\C#\bomber winform\bomber winform\obj\Debug\bomber winform.pdb
+E:\tvorba\programovani\C#\bomber\bomber winform\bin\Debug\bomber winform.exe.config
+E:\tvorba\programovani\C#\bomber\bomber winform\obj\Debug\bomber winform.exe
+E:\tvorba\programovani\C#\bomber\bomber winform\obj\Debug\bomber winform.pdb
+E:\tvorba\programovani\C#\bomber\bomber winform\bin\Debug\csfml-audio-2.dll
+E:\tvorba\programovani\C#\bomber\bomber winform\bin\Debug\csfml-graphics-2.dll
+E:\tvorba\programovani\C#\bomber\bomber winform\bin\Debug\csfml-network-2.dll
+E:\tvorba\programovani\C#\bomber\bomber winform\bin\Debug\csfml-system-2.dll
+E:\tvorba\programovani\C#\bomber\bomber winform\bin\Debug\csfml-window-2.dll
+E:\tvorba\programovani\C#\bomber\bomber winform\bin\Debug\libsndfile-1.dll
+E:\tvorba\programovani\C#\bomber\bomber winform\bin\Debug\openal32.dll
+E:\tvorba\programovani\C#\bomber\bomber winform\bin\Debug\OpenTK.Compatibility.dll
+E:\tvorba\programovani\C#\bomber\bomber winform\bin\Debug\OpenTK.dll
+E:\tvorba\programovani\C#\bomber\bomber winform\bin\Debug\bomber winform.exe
+E:\tvorba\programovani\C#\bomber\bomber winform\bin\Debug\bomber winform.pdb
+E:\tvorba\programovani\C#\bomber\bomber winform\bin\Debug\sfmlnet-audio-2.dll
+E:\tvorba\programovani\C#\bomber\bomber winform\bin\Debug\sfmlnet-graphics-2.dll
+E:\tvorba\programovani\C#\bomber\bomber winform\bin\Debug\sfmlnet-system-2.dll
+E:\tvorba\programovani\C#\bomber\bomber winform\bin\Debug\sfmlnet-window-2.dll
+E:\tvorba\programovani\C#\bomber\bomber winform\obj\Debug\bomber winform.csprojResolveAssemblyReference.cache
+E:\tvorba\programovani\C#\bomber\bomber winform\obj\Debug\bomber_winform.Form1.resources
+E:\tvorba\programovani\C#\bomber\bomber winform\obj\Debug\bomber_winform.Properties.Resources.resources
+E:\tvorba\programovani\C#\bomber\bomber winform\obj\Debug\bomber winform.csproj.GenerateResource.Cache
