@@ -1,0 +1,22 @@
+E:\tvorba\programovani\C#\bomber\bomber winform\bin\Release\bomber.exe.config
+E:\tvorba\programovani\C#\bomber\bomber winform\bin\Release\csfml-audio-2.dll
+E:\tvorba\programovani\C#\bomber\bomber winform\bin\Release\csfml-graphics-2.dll
+E:\tvorba\programovani\C#\bomber\bomber winform\bin\Release\csfml-network-2.dll
+E:\tvorba\programovani\C#\bomber\bomber winform\bin\Release\csfml-system-2.dll
+E:\tvorba\programovani\C#\bomber\bomber winform\bin\Release\csfml-window-2.dll
+E:\tvorba\programovani\C#\bomber\bomber winform\bin\Release\libsndfile-1.dll
+E:\tvorba\programovani\C#\bomber\bomber winform\bin\Release\openal32.dll
+E:\tvorba\programovani\C#\bomber\bomber winform\bin\Release\OpenTK.Compatibility.dll
+E:\tvorba\programovani\C#\bomber\bomber winform\bin\Release\OpenTK.dll
+E:\tvorba\programovani\C#\bomber\bomber winform\bin\Release\bomber.exe
+E:\tvorba\programovani\C#\bomber\bomber winform\bin\Release\bomber.pdb
+E:\tvorba\programovani\C#\bomber\bomber winform\bin\Release\sfmlnet-audio-2.dll
+E:\tvorba\programovani\C#\bomber\bomber winform\bin\Release\sfmlnet-graphics-2.dll
+E:\tvorba\programovani\C#\bomber\bomber winform\bin\Release\sfmlnet-system-2.dll
+E:\tvorba\programovani\C#\bomber\bomber winform\bin\Release\sfmlnet-window-2.dll
+E:\tvorba\programovani\C#\bomber\bomber winform\obj\Release\bomber winform.csprojResolveAssemblyReference.cache
+E:\tvorba\programovani\C#\bomber\bomber winform\obj\Release\bomber_winform.Form1.resources
+E:\tvorba\programovani\C#\bomber\bomber winform\obj\Release\bomber_winform.Properties.Resources.resources
+E:\tvorba\programovani\C#\bomber\bomber winform\obj\Release\bomber winform.csproj.GenerateResource.Cache
+E:\tvorba\programovani\C#\bomber\bomber winform\obj\Release\bomber.exe
+E:\tvorba\programovani\C#\bomber\bomber winform\obj\Release\bomber.pdb

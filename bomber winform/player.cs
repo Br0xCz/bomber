@@ -11,8 +11,13 @@ namespace bomber_winform
 {
     class Player
     {
-        private int maxBombCount = 3;
+        public int maxBombCount = 3;
         public int bombCount = 0;
+
+        public bool penetration = false;
+
+        public int bombRange = 2;
+        public int bombClock = 8;
 
         public int id;
         public bool dead = false;
@@ -20,7 +25,7 @@ namespace bomber_winform
         private Texture playerTexture;
         public Sprite player;
 
-        private bool[] collision = { true, true, false, true, true };
+        private bool[] collision = { true, false, true, true, true, true, true, true, true };
 
         public short tileSize = 16;
         private short scale = 2;
@@ -32,9 +37,12 @@ namespace bomber_winform
 
         private int[,] map;
         private int[,] gameState;
-        public Player(int posX, int posY, int[,] map, Keyboard.Key[] controls, int id)
+
+        public string name;
+
+        public Player(int posX, int posY, int[,] map, Keyboard.Key[] controls, int id, string name)
         {
-            this.playerTexture = new Texture("resources/tileset.png",new IntRect(new Vector2i(this.tileSize * id, this.tileSize*2), new Vector2i(this.tileSize,this.tileSize)));
+            this.playerTexture = new Texture("resources/tileset.png", new IntRect(new Vector2i(this.tileSize * id, this.tileSize * 2), new Vector2i(this.tileSize, this.tileSize)));
             this.player = new Sprite(this.playerTexture);
             this.player.Scale = new Vector2f(2.0f, 2.0f);
             this.player.Position = new Vector2f(posX * this.tileSize * this.scale, posY * this.tileSize * this.scale);
@@ -42,8 +50,8 @@ namespace bomber_winform
             this.map = map;
             this.id = id;
             this.controls = controls;
+            this.name = name;
 
-            
         }
         private bool checkCollision(int translateX, int translateY)
         {
@@ -84,7 +92,7 @@ namespace bomber_winform
                     {
                         this.gameState[this.positon.Y, this.positon.X] = 1;
                         this.bombCount++;
-                        bombs.Add(new Bomb(clock + 5, this.positon, this.id));
+                        bombs.Add(new Bomb(clock + this.bombClock, this.positon, this.id, this.bombRange,this.penetration));
                     }
 
                     break;
@@ -96,7 +104,7 @@ namespace bomber_winform
             if (gameState[this.positon.Y, this.positon.X] == 2)
             {
                 this.dead = true;
-                
+
             }
             if (!dead)
             {
@@ -128,69 +136,5 @@ namespace bomber_winform
 
         }
     }
-    class Bomb
-    {
-        public int owner;
-        public long explosionTime;
-        private bool exploding = false;
-        private bool stopExploding = false;
-        public bool destroyBomb = false;
-        private Vector2i position;
-        public Bomb(long explosionTime, Vector2i position, int id)
-        {
-            this.position = new Vector2i(Convert.ToInt32(position.X), Convert.ToInt32(position.Y));
-            this.explosionTime = explosionTime;
-            this.owner = id;
-        }
-        public void checkExplosion(long clock, ref int[,] map, ref int[,] gameState)
-        {
-            if (this.explosionTime == clock && this.exploding == false)
-            {
-                this.exploding = true;
-
-            }
-            else if (this.exploding && this.explosionTime == clock - 1)
-            {
-                this.exploding = false;
-                this.stopExploding = true;
-            }
-            explosion(ref map, ref gameState, 0, 0);
-            explosion(ref map, ref gameState, -1, 0);
-            explosion(ref map, ref gameState, 0, -1);
-            explosion(ref map, ref gameState, 1, 0);
-            explosion(ref map, ref gameState, 0, 1);
-            if (this.stopExploding)
-            {
-                this.stopExploding = false;
-                this.destroyBomb = true;
-            }
-        }
-        public void explosion(ref int[,] map, ref int[,] gameState, int j, int i)
-        {
-
-
-            int posY = Convert.ToInt32(this.position.X) + j;
-            int posX = Convert.ToInt32(this.position.Y) + i;
-
-            if (!(posX < 0 || posX > 15 || posY < 0 || posY > 15))
-            {
-                if (this.exploding)
-                {
-                    if (map[posX, posY] == 3)
-                    {
-                        map[posX, posY] = 2;
-                    }
-                    if(map[posX,posY] != 1)
-                    gameState[posX, posY] = 2;
-
-                }
-                if (this.stopExploding)
-                {
-                    gameState[posX, posY] = 0;
-                }
-
-            }
-
-        }
-    }
+    
 }

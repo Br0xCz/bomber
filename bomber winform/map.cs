@@ -18,17 +18,18 @@ namespace bomber_winform
         private short scale = 2;
         public VertexArray tileMap = new VertexArray(PrimitiveType.Quads, 1024);
         public VertexArray bombMap = new VertexArray(PrimitiveType.Quads, 1024);
+
+        public Transform tranform=new Transform();
         public Map()
         {
-
         }
 
         public void generateMap(int[,] map)
         {
             uint index = 0;
-            for (int i = 0; i < 16; i++)
+            for (int i = 0; i < map.GetLength(0); i++)
             {
-                for (int j = 0; j < 16; j++)
+                for (int j = 0; j < map.GetLength(1); j++)
                 {
                     uint indexMod = index * 4;
 
@@ -46,6 +47,27 @@ namespace bomber_winform
                 }
             }
         }
+        public int[,] generateBonus(int[,] map)
+        {
+            Random rnd = new Random();
+            for (int i = 0; i < 16; i++)
+            {
+                for (int j = 0; j < 16; j++)
+                {
+                    if (map[i,j]==2 )
+                    {
+                        if(rnd.Next(20) > 17)
+                        {
+                            map[i, j] = rnd.Next(2)+6;
+                            if (rnd.Next(5) == 2)
+                                map[i, j] = 3;
+                        }
+                    }
+                }
+            }
+            return map;
+        }
+
         public void generateBombMap(int[,] map)
         {
             uint index = 0;
@@ -66,15 +88,15 @@ namespace bomber_winform
                         tu = 0 * this.tileSize;
                         tv = 1 * this.tileSize;
                     }
-                    else if(map[i, j] ==2)
+                    else if (map[i, j] == 2)
                     {
                         tu = 1 * this.tileSize;
                         tv = 1 * this.tileSize;
                     }
                     else
                     {
-                        tu = 3* this.tileSize;
-                        tv = 3* this.tileSize;
+                        tu = 3 * this.tileSize;
+                        tv = 3 * this.tileSize;
 
                     }
                     this.bombMap[indexMod + 0] = new Vertex(new Vector2f(positionX, positionY), new Vector2f(tu, tv));
@@ -88,7 +110,7 @@ namespace bomber_winform
         virtual public void Draw(RenderTarget target, RenderStates states)
         {
             states.Texture = this.tilesetTexture;
-
+            //states.Transform = this.tranform;
             target.Draw(this.tileMap, states);
             target.Draw(this.bombMap, states);
         }
