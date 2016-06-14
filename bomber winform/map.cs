@@ -61,7 +61,7 @@ namespace bomber_winform
                 {
                     if (map[i, j] == 2)
                     {
-                        if (rnd.Next(20) > 17)
+                        if (rnd.Next(20) > 16)
                         {
                             map[i, j] = rnd.Next(2) + 6;
                             if (rnd.Next(5) == 2)

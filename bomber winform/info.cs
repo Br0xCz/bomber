@@ -12,10 +12,10 @@ namespace bomber_winform
     class Info : Drawable
     {
         int[,] infoMap = {
-            {12,12,12,12,12,12,12,12},
-            {12,2,2,12,12,12,12,12},
-            {12,2,2,12,12,12,12,12},
-            {12,12,12,12,12,12,12,12},
+            {0,0,0,0,0,0,0,0},
+            {0,13,13,12,12,12,12,0},
+            {0,13,13,12,12,12,12,0},
+            {0,12,12,12,12,12,12,0},
 
         };
 
@@ -35,23 +35,23 @@ namespace bomber_winform
         }
 
         Font fontFace = new Font("resources/pixelFont.ttf");
-        Text text;
 
         List<PlayerInfo> players = new List<PlayerInfo>();
 
 
-
         public Info(List<Player> players)
         {
-            this.text = new Text("ABCDEFGHIJKLMNOPQRSTUVWXYZ abcdefghijklmnopqrstuvwxyz", this.fontFace);
+            /*this.text = new Text("...", this.fontFace);
             this.text.CharacterSize = 16;
-            this.text.Scale = new Vector2f(1.5f, 1.5f);
+            this.text.Scale = new Vector2f(1.5f, 1.5f);*/
             //this.text.Color = new Color(255,100,10);
             //this.text.Style = Text.Styles.Bold;
             int i = 0;
             foreach (var player in players)
             {
-                this.setData(player, i);
+                PlayerInfo temp= this.setData(player, i);
+                this.players.Add(temp);
+                //this.text.DisplayedString = Convert.ToString(i);
                 i++;
 
             }
@@ -62,12 +62,13 @@ namespace bomber_winform
         {
             for (int i = 0; i < players.Count; i++)
             {
-                this.setData(players[i], i);
+                PlayerInfo temp= this.setData(players[i], i);
+                this.players[i] = temp;
             }
 
         }
 
-        private void setData(Player player, int i)
+        private PlayerInfo setData(Player player, int i)
         {
 
             Vector2f startPosition = new Vector2f(512,128*i);
@@ -99,8 +100,17 @@ namespace bomber_winform
             temp.explosionReach.scale = new Vector2f(8, 8);
             temp.explosionReach.generateMap(explosionRange, startPosition + new Vector2f(128, 48));
 
+            Texture playerTexture = new Texture("resources/tileset.png",new IntRect(new Vector2i(16*player.id,32),new Vector2i(16,16)));
+            temp.playerSkin = new Sprite(playerTexture);
+            temp.playerSkin.Position = new Vector2f(32+8,32+8) + startPosition;
+            temp.playerSkin.Scale = new Vector2f(3.0f, 3.0f);
 
-            this.players.Add(temp);
+            temp.nickName = new Text();
+            temp.nickName.Font = this.fontFace;
+            temp.nickName.DisplayedString = player.name;
+            temp.nickName.Position = new Vector2f(40,90) + startPosition;
+
+            return temp;
         }
 
         virtual public void Draw(RenderTarget target, RenderStates states)
@@ -110,9 +120,10 @@ namespace bomber_winform
                 target.Draw(player.display);
                 target.Draw(player.bombLimit);
                 target.Draw(player.explosionReach);
+                target.Draw(player.playerSkin);
+                target.Draw(player.nickName);
             }
 
-            target.Draw(this.text);
 
         }
     }

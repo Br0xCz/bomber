@@ -87,10 +87,10 @@ namespace bomber_winform
             window.SetFramerateLimit(16);
 
             List<Player> players = new List<Player>();
-            players.Add(new Player(0, 0, mapArray, player1controls, 0, "Petko"));
-            players.Add(new Player(15, 15, mapArray, player2controls, 1, "The Zola Men"));
-            players.Add(new Player(15, 0, mapArray, player3controls, 2, "Muni"));
-            players.Add(new Player(0, 15, mapArray, player4controls, 3, "Jarda"));
+            players.Add(new Player(0 , 0 , mapArray, player1controls, 0, "Player 1"));
+            players.Add(new Player(15, 15, mapArray, player2controls, 1, "Player 2"));
+            players.Add(new Player(15, 0 , mapArray, player3controls, 2, "Player 3"));
+            players.Add(new Player(0 , 15, mapArray, player4controls, 3, "Player 4"));
 
             Map map = new Map();
             mapArray = map.generateBonus(mapArray);
@@ -148,6 +148,7 @@ namespace bomber_winform
                                     player.maxBombCount += bomb.increaseBombCount;
                                     player.penetration = bomb.penetration;
                                     player.bombCount--;
+                                    player.checkLimit();
                                 }
                             }
 

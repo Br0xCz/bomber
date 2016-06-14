@@ -10,7 +10,7 @@ namespace bomber_winform
 {
     class Player
     {
-        public int maxBombCount = 3;
+        public int maxBombCount = 1;
         public int bombCount = 0;
 
         public bool penetration = false;
@@ -38,6 +38,9 @@ namespace bomber_winform
         private int[,] gameState;
 
         public string name;
+
+        private int maxBonusBombCount = 5;
+        private int maxBonusExplosionRange = 6;
 
         public Player(int posX, int posY, int[,] map, Keyboard.Key[] controls, int id, string name)
         {
@@ -100,6 +103,7 @@ namespace bomber_winform
         }
         public int[,] input(int[,] gameState, ref List<Bomb> bombs, long clock)
         {
+
             if (gameState[this.positon.Y, this.positon.X] == 2)
             {
                 this.dead = true;
@@ -133,6 +137,18 @@ namespace bomber_winform
             }
             return gameState;
 
+        }
+        public void checkLimit()
+        {
+            if(this.maxBombCount > this.maxBonusBombCount)
+            {
+                this.maxBombCount = this.maxBonusBombCount;
+            }
+
+            if (this.bombRange > this.maxBonusExplosionRange)
+            {
+                this.bombRange = this.maxBonusExplosionRange;
+            }
         }
     }
     
