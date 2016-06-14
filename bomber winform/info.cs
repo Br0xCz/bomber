@@ -13,8 +13,8 @@ namespace bomber_winform
     {
         int[,] infoMap = {
             {12,12,12,12,12,12,12,12},
-            {12,1,1,12,12,12,12,12},
-            {12,1,1,12,12,12,12,12},
+            {12,2,2,12,12,12,12,12},
+            {12,2,2,12,12,12,12,12},
             {12,12,12,12,12,12,12,12},
 
         };
@@ -25,16 +25,25 @@ namespace bomber_winform
             public int maxBombCount;
             public int explosionRange;
             public int id;
+
+            public Map display;
+            public Map bombLimit;
+            public Map explosionReach;
+            public Sprite playerSkin;
+            public Text nickName;
+            public Text penetrative;
         }
 
         Font fontFace = new Font("resources/pixelFont.ttf");
         Text text;
 
         List<PlayerInfo> players = new List<PlayerInfo>();
-        List<Map> display=new List<Map>();
+
+
+
         public Info(List<Player> players)
         {
-            this.text = new Text("name: Kadinko\nmax bomb count: 3\nexplosion range: 4\npenetration: no", this.fontFace);
+            this.text = new Text("ABCDEFGHIJKLMNOPQRSTUVWXYZ abcdefghijklmnopqrstuvwxyz", this.fontFace);
             this.text.CharacterSize = 16;
             this.text.Scale = new Vector2f(1.5f, 1.5f);
             //this.text.Color = new Color(255,100,10);
@@ -42,18 +51,9 @@ namespace bomber_winform
             int i = 0;
             foreach (var player in players)
             {
-                PlayerInfo temp = new PlayerInfo();
-                temp.name = player.name;
-                temp.maxBombCount = player.bombCount;
-                temp.explosionRange = player.bombRange;
-                temp.id = player.id;
-                this.players.Add(temp);
-
-                Map tempMap = new Map();
-                tempMap.generateMap(this.infoMap);
-                tempMap.tranform.Translate(new Vector2f(512, 128 * i));
+                this.setData(player, i);
                 i++;
-                this.display.Add(tempMap);
+
             }
 
 
@@ -62,20 +62,54 @@ namespace bomber_winform
         {
             for (int i = 0; i < players.Count; i++)
             {
-                PlayerInfo temp = new PlayerInfo();
-                temp.name = players[i].name;
-                temp.maxBombCount = players[i].bombCount;
-                temp.explosionRange = players[i].bombRange;
-                temp.id = players[i].id;
-                this.players[i] = temp;
+                this.setData(players[i], i);
             }
 
         }
+
+        private void setData(Player player, int i)
+        {
+
+            Vector2f startPosition = new Vector2f(512,128*i);
+
+            PlayerInfo temp = new PlayerInfo();
+            temp.name = player.name;
+            temp.maxBombCount = player.bombCount;
+            temp.explosionRange = player.bombRange;
+            temp.id = player.id;
+
+            temp.display = new Map();
+            temp.display.generateMap(this.infoMap, startPosition);
+
+            int[,] maxBombs = new int[1,player.maxBombCount];
+            for (int k = 0; k < player.maxBombCount; k++)
+            {
+                maxBombs[0,k] = 4;
+            }
+            temp.bombLimit = new Map();
+            temp.bombLimit.scale = new Vector2f(8,8);
+            temp.bombLimit.generateMap(maxBombs,startPosition + new Vector2f(128,32));
+
+            int[,] explosionRange = new int[1, player.bombRange-1];
+            for (int k = 0; k < player.bombRange-1; k++)
+            {
+                explosionRange[0, k] = 5;
+            }
+            temp.explosionReach = new Map();
+            temp.explosionReach.scale = new Vector2f(8, 8);
+            temp.explosionReach.generateMap(explosionRange, startPosition + new Vector2f(128, 48));
+
+
+            this.players.Add(temp);
+        }
+
         virtual public void Draw(RenderTarget target, RenderStates states)
         {
-            foreach (var map in display)
+            foreach (var player in this.players)
             {
-                target.Draw(map);
+                target.Draw(player.display);
+                target.Draw(player.bombLimit);
+                target.Draw(player.explosionReach);
             }
 
             target.Draw(this.text);

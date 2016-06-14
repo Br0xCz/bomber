@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 using SFML.System;
 using SFML.Graphics;
 using SFML.Window;
-
 namespace bomber_winform
 {
     class Player

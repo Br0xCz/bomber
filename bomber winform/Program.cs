@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Forms;
-using SFML;
+using SFML.System;
 using SFML.Graphics;
 using SFML.Window;
 
@@ -94,7 +94,7 @@ namespace bomber_winform
 
             Map map = new Map();
             mapArray = map.generateBonus(mapArray);
-            map.generateMap(mapArray);
+            map.generateMap(mapArray,new Vector2f(0,0));
 
             Color windowColor = new Color(0, 0, 0);
 
@@ -124,7 +124,9 @@ namespace bomber_winform
                         window.Draw(player.player);
                     }
                 }
+                info.updateInfo(players);
                 window.Draw(info);
+
                 window.Display();
 
                 clockPeriod++;
@@ -154,7 +156,7 @@ namespace bomber_winform
                         //bombs.RemoveAt(index);
                         index++;
                     }
-                    map.generateMap(mapArray);
+                    map.generateMap(mapArray, new Vector2f(0, 0));
 
 
                 }

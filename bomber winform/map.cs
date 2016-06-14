@@ -15,17 +15,22 @@ namespace bomber_winform
         private Texture tilesetTexture = new Texture("resources/tileset.png");
 
         public short tileSize = 16;
-        private short scale = 2;
+        public short textureScale = 2;
+        public Vector2f scale = new Vector2f(16.0f, 16.0f);
+
         public VertexArray tileMap = new VertexArray(PrimitiveType.Quads, 1024);
         public VertexArray bombMap = new VertexArray(PrimitiveType.Quads, 1024);
 
-        public Transform tranform=new Transform();
+        public Transform tranform = new Transform();
+
         public Map()
         {
         }
 
-        public void generateMap(int[,] map)
+        public void generateMap(int[,] map, Vector2f offset)
         {
+
+
             uint index = 0;
             for (int i = 0; i < map.GetLength(0); i++)
             {
@@ -33,16 +38,16 @@ namespace bomber_winform
                 {
                     uint indexMod = index * 4;
 
-                    float positionX = (j) * (this.tileSize * this.scale);
-                    float positionY = (i) * (this.tileSize * this.scale);
+                    float positionX = (j) * (this.scale.X * this.textureScale) + offset.X;
+                    float positionY = (i) * (this.scale.Y * this.textureScale) + offset.Y;
 
                     float tu = (map[i, j] % 4) * this.tileSize;
                     float tv = ((map[i, j] - map[i, j] % 4) / 4) * this.tileSize;
 
                     this.tileMap[indexMod + 0] = new Vertex(new Vector2f(positionX, positionY), new Vector2f(tu, tv));
-                    this.tileMap[indexMod + 1] = new Vertex(new Vector2f(positionX + (this.tileSize * this.scale), positionY), new Vector2f(tu + this.tileSize, tv));
-                    this.tileMap[indexMod + 2] = new Vertex(new Vector2f(positionX + (this.tileSize * this.scale), positionY + (this.tileSize * this.scale)), new Vector2f(tu + this.tileSize, tv + this.tileSize));
-                    this.tileMap[indexMod + 3] = new Vertex(new Vector2f(positionX, positionY + (this.tileSize * this.scale)), new Vector2f(tu, tv + this.tileSize));
+                    this.tileMap[indexMod + 1] = new Vertex(new Vector2f(positionX + (this.scale.X * this.textureScale), positionY), new Vector2f(tu + this.tileSize, tv));
+                    this.tileMap[indexMod + 2] = new Vertex(new Vector2f(positionX + (this.scale.X * this.textureScale), positionY + (this.scale.Y * this.textureScale)), new Vector2f(tu + this.tileSize, tv + this.tileSize));
+                    this.tileMap[indexMod + 3] = new Vertex(new Vector2f(positionX, positionY + (this.scale.Y * this.textureScale)), new Vector2f(tu, tv + this.tileSize));
                     index++;
                 }
             }
@@ -54,11 +59,11 @@ namespace bomber_winform
             {
                 for (int j = 0; j < 16; j++)
                 {
-                    if (map[i,j]==2 )
+                    if (map[i, j] == 2)
                     {
-                        if(rnd.Next(20) > 17)
+                        if (rnd.Next(20) > 17)
                         {
-                            map[i, j] = rnd.Next(2)+6;
+                            map[i, j] = rnd.Next(2) + 6;
                             if (rnd.Next(5) == 2)
                                 map[i, j] = 3;
                         }
@@ -77,8 +82,8 @@ namespace bomber_winform
                 {
                     uint indexMod = index * 4;
 
-                    float positionX = (j) * (this.tileSize * this.scale);
-                    float positionY = (i) * (this.tileSize * this.scale);
+                    float positionX = (j) * (this.tileSize * this.textureScale);
+                    float positionY = (i) * (this.tileSize * this.textureScale);
 
                     float tu, tv;
 
@@ -100,9 +105,9 @@ namespace bomber_winform
 
                     }
                     this.bombMap[indexMod + 0] = new Vertex(new Vector2f(positionX, positionY), new Vector2f(tu, tv));
-                    this.bombMap[indexMod + 1] = new Vertex(new Vector2f(positionX + (this.tileSize * this.scale), positionY), new Vector2f(tu + this.tileSize, tv));
-                    this.bombMap[indexMod + 2] = new Vertex(new Vector2f(positionX + (this.tileSize * this.scale), positionY + (this.tileSize * this.scale)), new Vector2f(tu + this.tileSize, tv + this.tileSize));
-                    this.bombMap[indexMod + 3] = new Vertex(new Vector2f(positionX, positionY + (this.tileSize * this.scale)), new Vector2f(tu, tv + this.tileSize));
+                    this.bombMap[indexMod + 1] = new Vertex(new Vector2f(positionX + (this.tileSize * this.textureScale), positionY), new Vector2f(tu + this.tileSize, tv));
+                    this.bombMap[indexMod + 2] = new Vertex(new Vector2f(positionX + (this.tileSize * this.textureScale), positionY + (this.tileSize * this.textureScale)), new Vector2f(tu + this.tileSize, tv + this.tileSize));
+                    this.bombMap[indexMod + 3] = new Vertex(new Vector2f(positionX, positionY + (this.tileSize * this.textureScale)), new Vector2f(tu, tv + this.tileSize));
                     index++;
                 }
             }
