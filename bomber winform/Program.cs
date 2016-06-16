@@ -121,7 +121,7 @@ namespace bomber_winform
 
             List<Player> players = new List<Player>();
 
-            string[] names = { "Brack Fell", "Barrock Umber", "Fernar Strong", "Kerith Kellington", "Camren Dustin", "Jovarn Tarner", "Jares Frosher", "Jacke Blest", "Dallen Furrow", "Clarrik Feller" };
+            string[] names = { "Brack Fell", "Barrock Umber", "Fernar Strong", "Kerith Kelington", "Camren Dustin", "Jovarn Tarner", "Jares Frosher", "Jacke Blest", "Dallen Furrow", "Clarrik Feller" };
 
             int[] nameArray =randomNumbers(names.Length,4);
 
