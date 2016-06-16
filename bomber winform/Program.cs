@@ -69,7 +69,7 @@ namespace bomber_winform
             if (focus == false)
                 focus = true;
         }
-
+        
         static void makeGameState()
         {
             for (int i = 0; i < 16; i++)

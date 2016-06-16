@@ -117,7 +117,7 @@ namespace bomber_winform
             this.players[i].nickName.Font = this.fontFace;
             this.players[i].nickName.DisplayedString = player.name;
             this.players[i].nickName.Position = new Vector2f(40,90) + startPosition;
-            this.players[i].nickName.Color = new Color(130, 58, 18);
+            this.players[i].nickName.Color = new Color(50, 50, 50);
 
             this.players[i].bombLimit = new Map();
             this.players[i].bombLimit.scale = new Vector2f(8, 8);
