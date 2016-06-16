@@ -36,8 +36,7 @@ namespace bomber_winform
 
         Font fontFace = new Font("resources/pixelFont.ttf");
 
-        List<PlayerInfo> players = new List<PlayerInfo>();
-
+        PlayerInfo[] players;
 
         public Info(List<Player> players)
         {
@@ -46,11 +45,18 @@ namespace bomber_winform
             this.text.Scale = new Vector2f(1.5f, 1.5f);*/
             //this.text.Color = new Color(255,100,10);
             //this.text.Style = Text.Styles.Bold;
+
+            this.players = new PlayerInfo[players.Count];
+            for (int k = 0; k < this.players.Length; k++)
+            {
+                this.players[k] = new PlayerInfo();
+            }
+
             int i = 0;
             foreach (var player in players)
             {
-                PlayerInfo temp= this.setData(player, i);
-                this.players.Add(temp);
+                this.setData(player, i);
+                this.update(players[i], i);
                 //this.text.DisplayedString = Convert.ToString(i);
                 i++;
 
@@ -62,55 +68,61 @@ namespace bomber_winform
         {
             for (int i = 0; i < players.Count; i++)
             {
-                PlayerInfo temp= this.setData(players[i], i);
-                this.players[i] = temp;
+                
+                
+                this.update(players[i],i);
             }
 
         }
 
-        private PlayerInfo setData(Player player, int i)
+        Vector2f startPosition = new Vector2f(512, 0);
+        private void update(Player player, int i)
         {
+            
 
-            Vector2f startPosition = new Vector2f(512,128*i);
-
-            PlayerInfo temp = new PlayerInfo();
-            temp.name = player.name;
-            temp.maxBombCount = player.bombCount;
-            temp.explosionRange = player.bombRange;
-            temp.id = player.id;
-
-            temp.display = new Map();
-            temp.display.generateMap(this.infoMap, startPosition);
-
-            int[,] maxBombs = new int[1,player.maxBombCount];
+            int[,] maxBombs = new int[1, player.maxBombCount];
             for (int k = 0; k < player.maxBombCount; k++)
             {
-                maxBombs[0,k] = 4;
+                maxBombs[0, k] = 4;
             }
-            temp.bombLimit = new Map();
-            temp.bombLimit.scale = new Vector2f(8,8);
-            temp.bombLimit.generateMap(maxBombs,startPosition + new Vector2f(128,32));
+            
+            this.players[i].bombLimit.generateMap(maxBombs, this.startPosition + new Vector2f(128, 32+i*128));
 
-            int[,] explosionRange = new int[1, player.bombRange-1];
-            for (int k = 0; k < player.bombRange-1; k++)
+            int[,] explosionRange = new int[1, player.bombRange - 1];
+            for (int k = 0; k < player.bombRange - 1; k++)
             {
                 explosionRange[0, k] = 5;
             }
-            temp.explosionReach = new Map();
-            temp.explosionReach.scale = new Vector2f(8, 8);
-            temp.explosionReach.generateMap(explosionRange, startPosition + new Vector2f(128, 48));
+           
+            this.players[i].explosionReach.generateMap(explosionRange, this.startPosition + new Vector2f(128,128*i+ 48));
+
+        }
+        private void setData(Player player, int i)
+        {
+            Vector2f startPosition = new Vector2f(512, 128 * i);
+
+            this.players[i].name = player.name;
+            this.players[i].maxBombCount = player.bombCount;
+            this.players[i].explosionRange = player.bombRange;
+            this.players[i].id = player.id;
+            this.players[i].display = new Map();
+            this.players[i].display.generateMap(this.infoMap, startPosition);
 
             Texture playerTexture = new Texture("resources/tileset.png",new IntRect(new Vector2i(16*player.id,32),new Vector2i(16,16)));
-            temp.playerSkin = new Sprite(playerTexture);
-            temp.playerSkin.Position = new Vector2f(32+8,32+8) + startPosition;
-            temp.playerSkin.Scale = new Vector2f(3.0f, 3.0f);
+            this.players[i].playerSkin = new Sprite(playerTexture);
+            this.players[i].playerSkin.Position = new Vector2f(32+8,32+8) + startPosition;
+            this.players[i].playerSkin.Scale = new Vector2f(3.0f, 3.0f);
 
-            temp.nickName = new Text();
-            temp.nickName.Font = this.fontFace;
-            temp.nickName.DisplayedString = player.name;
-            temp.nickName.Position = new Vector2f(40,90) + startPosition;
+            this.players[i].nickName = new Text();
+            this.players[i].nickName.Font = this.fontFace;
+            this.players[i].nickName.DisplayedString = player.name;
+            this.players[i].nickName.Position = new Vector2f(40,90) + startPosition;
 
-            return temp;
+            this.players[i].bombLimit = new Map();
+            this.players[i].bombLimit.scale = new Vector2f(8, 8);
+
+            this.players[i].explosionReach = new Map();
+            this.players[i].explosionReach.scale = new Vector2f(8, 8);
         }
 
         virtual public void Draw(RenderTarget target, RenderStates states)

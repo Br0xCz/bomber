@@ -51,11 +51,23 @@ namespace bomber_winform
             {2,3,3,1,3,3,1,3, 3,1,3,3,1,3,3,2},
             {2,2,3,3,3,3,3,3, 3,3,3,3,3,3,2,2}
             */
+        static bool focus = true;
+
         static int[,] gameState = new int[16, 16];
         static void OnClose(object sender, EventArgs e)
         {
             RenderWindow window = (RenderWindow)sender;
             window.Close();
+        }
+        static void lostFocus(object sender, EventArgs e)
+        {
+            if (focus == true)
+                focus = false;
+        }
+        static void gainedFocus(object sender, EventArgs e)
+        {
+            if (focus == false)
+                focus = true;
         }
 
         static void makeGameState()
@@ -67,6 +79,24 @@ namespace bomber_winform
                     gameState[j, i] = 0;
                 }
             }
+        }
+        static int[] randomNumbers(int variety,int lenght)
+        {
+
+            Random rnd = new Random();
+            int[] temp = new int[lenght];
+            for (int j = 0; j < lenght; j++)
+            {
+
+                temp[j] = rnd.Next(variety);
+                for (int i = 0; i < j; i++)
+                {
+                    if (temp[i] == temp[j])
+                        j--;
+                }
+            }
+
+            return temp;
         }
         static void Main()
         {
@@ -84,13 +114,21 @@ namespace bomber_winform
 
             RenderWindow window = new RenderWindow(new VideoMode(768, 512), "Bomber");
             window.Closed += new EventHandler(OnClose);
+            window.LostFocus += new EventHandler(lostFocus);
+            window.GainedFocus += new EventHandler(gainedFocus);
+
             window.SetFramerateLimit(16);
 
             List<Player> players = new List<Player>();
-            players.Add(new Player(0 , 0 , mapArray, player1controls, 0, "Player 1"));
-            players.Add(new Player(15, 15, mapArray, player2controls, 1, "Player 2"));
-            players.Add(new Player(15, 0 , mapArray, player3controls, 2, "Player 3"));
-            players.Add(new Player(0 , 15, mapArray, player4controls, 3, "Player 4"));
+
+            string[] names = { "Brack Fell", "Barrock Umber", "Fernar Strong", "Kerith Kellington", "Camren Dustin", "Jovarn Tarner", "Jares Frosher", "Jacke Blest", "Dallen Furrow", "Clarrik Feller" };
+
+            int[] nameArray =randomNumbers(names.Length,4);
+
+            players.Add(new Player(0 , 0 , mapArray, player1controls, 0, names[nameArray[0]]));
+            players.Add(new Player(15, 15, mapArray, player2controls, 1, names[nameArray[1]]));
+            players.Add(new Player(15, 0 , mapArray, player3controls, 2, names[nameArray[2]]));
+            players.Add(new Player(0 , 15, mapArray, player4controls, 3, names[nameArray[3]]));
 
             Map map = new Map();
             mapArray = map.generateBonus(mapArray);
@@ -110,12 +148,13 @@ namespace bomber_winform
 
 
                 window.Draw(map);
-
+                if(focus)
+                { 
                 foreach (var player in players)
                 {
                     gameState = player.input(gameState, ref bombs, clock);
                 }
-
+                }
 
                 foreach (var player in players)
                 {
